@@ -288,9 +288,13 @@ def info(
         raise typer.Exit(code=1)
 
     content = vestibule.read_text()
+    lines = content.splitlines()
+    preview = "\n".join(lines[:40])
+    if len(lines) > 40:
+        preview += "\n…"
     console.print(
         Panel(
-            content[:1200] + ("\n[dim]…[/dim]" if len(content) > 1200 else ""),
+            Text(preview),
             title=f"[bold cyan]{target.name}[/bold cyan] — Vestibule",
             border_style="cyan",
         )
