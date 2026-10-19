@@ -144,10 +144,10 @@ def new(
         err_console.print(f"[bold]✗[/bold] Skin not found: [yellow]{skin}[/yellow]")
         err_console.print(f"  {e}")
         err_console.print("  Run [bold]openloci skins[/bold] to see available skins.")
-        raise typer.Exit(code=1)
+        raise typer.Exit(code=1) from e
     except Exception as e:
         err_console.print(f"[bold]✗[/bold] Generation failed: {e}")
-        raise typer.Exit(code=1)
+        raise typer.Exit(code=1) from e
 
     console.print()
     console.print(
@@ -228,10 +228,10 @@ def rooms(
     """
     try:
         info = get_skin_info(skin)
-    except FileNotFoundError:
+    except FileNotFoundError as e:
         err_console.print(f"[bold]✗[/bold] Skin not found: [yellow]{skin}[/yellow]")
         err_console.print("  Run [bold]openloci skins[/bold] to see available skins.")
-        raise typer.Exit(code=1)
+        raise typer.Exit(code=1) from e
 
     room_data = info.get("room_map", [])
     if not room_data:
